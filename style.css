@@ -266,26 +266,49 @@ h1, h2, h3, p { margin: 0; }
 .glass-shard {
   position: fixed; right: -6vw; top: 50%; width: 40vw; max-width: 620px;
   height: 56vh; max-height: 520px; z-index: 900; pointer-events: none;
-  transform: translateY(-50%) rotate(-8deg);
-  transition: transform 0.3s ease-out, filter 0.3s ease-out;
+  transform: translateY(-50%);
+  perspective: 1400px;
+  transition: filter 0.3s ease-out;
 }
-.shard-face {
+.shard-3d {
+  position: absolute; inset: 0;
+  transform-style: preserve-3d;
+  transform: rotateX(14deg) rotateY(-18deg) rotateZ(-8deg);
+  transition: transform 0.4s cubic-bezier(.2,.7,.2,1);
+}
+.shard-face, .shard-face-back, .shard-slice {
   position: absolute; inset: 0;
   clip-path: polygon(24% 0%, 78% 6%, 100% 38%, 86% 78%, 52% 100%, 18% 86%, 0% 46%);
-  background: linear-gradient(155deg, rgba(74,125,227,0.22), rgba(74,125,227,0.04) 55%, rgba(242,240,234,0.08));
-  border: 1.5px solid rgba(74,125,227,0.32);
+}
+.shard-face {
+  background: linear-gradient(155deg, rgba(74,125,227,0.26), rgba(74,125,227,0.05) 55%, rgba(242,240,234,0.1));
+  border: 1.5px solid rgba(74,125,227,0.36);
+  transform: translateZ(26px);
+  box-shadow: 0 0 60px rgba(74,125,227,0.25);
+}
+.shard-face-back {
+  background: linear-gradient(155deg, rgba(10,10,14,0.9), rgba(74,125,227,0.1) 60%, rgba(0,0,0,0.6));
+  border: 1px solid rgba(74,125,227,0.15);
+  transform: translateZ(-26px);
+}
+.shard-slice {
+  border: 1px solid rgba(74,125,227,0.18);
+  background: rgba(74,125,227,0.03);
 }
 .shard-inner {
   position: absolute; inset: 8%;
   clip-path: polygon(24% 0%, 78% 6%, 100% 38%, 86% 78%, 52% 100%, 18% 86%, 0% 46%);
   border: 1px solid rgba(242,240,234,0.1);
+  transform: translateZ(27px);
 }
 .shard-label-wrap {
   position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  transform: translateZ(34px);
+  backface-visibility: hidden;
 }
 .shard-label {
   font: 600 clamp(24px, 4.5vw, 52px)/1 'Inter', sans-serif;
-  letter-spacing: -0.01em; text-transform: uppercase; color: rgba(242,240,234,0.2);
+  letter-spacing: -0.01em; text-transform: uppercase; color: rgba(242,240,234,0.22);
   white-space: nowrap; transform: skewX(-8deg);
 }
 

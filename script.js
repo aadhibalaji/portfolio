@@ -7,6 +7,7 @@
   const sideDots = document.querySelectorAll('.side-dot');
   const tabItems = document.querySelectorAll('.tab-item');
   const glassShard = document.getElementById('glassShard');
+  const shardSpin = document.getElementById('shardSpin');
   const shardLabel = document.getElementById('shardLabel');
 
   let activeKey = 'hero';
@@ -23,7 +24,10 @@
     const h = document.documentElement.scrollHeight - window.innerHeight;
     const pct = h > 0 ? Math.min(100, Math.max(0, (window.scrollY / h) * 100)) : 0;
     progressFill.style.width = pct + '%';
-    glassShard.style.transform = `translateY(-50%) rotate(${-8 + (pct / 100) * 22}deg)`;
+    const rotY = -18 + (pct / 100) * 380; // multiple full turns down the page
+    const rotX = 14 + Math.sin(pct / 100 * Math.PI * 2) * 10;
+    const rotZ = -8 + (pct / 100) * 34;
+    shardSpin.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg) rotateZ(${rotZ}deg)`;
     glassShard.style.filter = `hue-rotate(${pct * 1.3}deg)`;
 
     const line = window.innerHeight * 0.4;
