@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Aadhitya Balaji — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="progress-track" aria-hidden="true">
+  <div class="progress-fill" id="progressFill"></div>
+</div>
+
+<div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+<div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+
+<nav class="side-nav" aria-label="Section navigation">
+  <a href="#hero" class="side-dot active" data-section="hero" aria-label="Intro"></a>
+  <a href="#about" class="side-dot" data-section="about" aria-label="About"></a>
+  <a href="#skills" class="side-dot" data-section="skills" aria-label="Skills"></a>
+  <a href="#projects" class="side-dot" data-section="projects" aria-label="Projects"></a>
+  <a href="#experience" class="side-dot" data-section="experience" aria-label="Experience"></a>
+  <a href="#contact" class="side-dot" data-section="contact" aria-label="Contact"></a>
+</nav>
+
+<div class="scroll-tag" aria-hidden="true">
+  <span class="scroll-line"></span>
+  SCROLL
+</div>
+
+<nav class="tab-nav" aria-label="Section tabs">
+  <a href="#hero" class="tab-item active" data-section="hero">Intro</a>
+  <a href="#about" class="tab-item" data-section="about">About</a>
+  <a href="#skills" class="tab-item" data-section="skills">Skills</a>
+  <a href="#projects" class="tab-item" data-section="projects">Projects</a>
+  <a href="#experience" class="tab-item" data-section="experience">Experience</a>
+  <a href="#contact" class="tab-item" data-section="contact">Contact</a>
+</nav>
+
+<div class="page">
+
+  <section id="hero" class="section hero-section" data-section="hero">
+    <div class="reveal" style="opacity:1;transform:none">
+      <div class="eyebrow-row">
+        <span class="eyebrow-line"></span>
+        <span class="eyebrow-label">PORTFOLIO // 2026</span>
+      </div>
+      <h1 class="hero-name">Aadhitya<br>Balaji</h1>
+      <div class="hero-role-row">
+        <span class="hero-role">Software &amp; ML Engineer</span>
+        <span class="hero-dot"></span>
+        <span class="hero-school">CS + Data Science @ UW&#8209;Madison</span>
+      </div>
+      <p class="hero-desc">
+        Building ML-driven products and researching computational biology &mdash; from cloud pipelines to embryo-development models.
+      </p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn btn-primary" data-hoverable>VIEW PROJECTS <span>&rarr;</span></a>
+        <a href="#contact" class="btn btn-outline" data-hoverable>GET IN TOUCH</a>
+      </div>
+      <div class="hero-marker">
+        <div class="marker-line"></div>
+        <span class="marker-label">01 &mdash; INTRO</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="section about-section" data-section="about">
+    <div class="reveal">
+      <div class="sec-head">
+        <span class="sec-num">02</span>
+        <span class="sec-rule"></span>
+      </div>
+      <h2 class="sec-title">About</h2>
+      <div class="about-grid">
+        <div class="stat-list">
+          <div class="stat-row">
+            <span class="stat-label">EDUCATION</span>
+            <span class="stat-value">UW&#8211;Madison &#8217;29</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">MAJORS</span>
+            <span class="stat-value">CS + Data Science</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">GPA</span>
+            <span class="stat-value">3.92 / 4.0</span>
+          </div>
+        </div>
+        <div class="about-copy">
+          <p class="about-p about-p-lead">
+            I'm a double major in Computer Science &amp; Data Science (minor in Business) at UW&#8211;Madison, expecting to graduate in 2029. I like turning messy, real-world problems &mdash; a pickleball rally, an embryo time-lapse &mdash; into working, deployed systems.
+          </p>
+          <p class="about-p">
+            On one side, I lead engineering for an early-stage AI coaching venture, building the cloud pipeline that gets a video into a coaching insight. On the other, I research unsupervised models for medical imaging in a computational biology lab. Both come down to the same instinct: find the signal, ship the system.
+          </p>
+          <div class="tag-row">
+            <span class="tag-chip">ML SYSTEMS</span>
+            <span class="tag-chip">CLOUD</span>
+            <span class="tag-chip">COMPUTER VISION</span>
+            <span class="tag-chip">RESEARCH</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" class="section skills-section" data-section="skills">
+    <div class="reveal">
+      <div class="sec-head">
+        <span class="sec-num">03</span>
+        <span class="sec-rule"></span>
+      </div>
+      <h2 class="sec-title">Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-card" data-hoverable>
+          <div class="skill-title">LANGUAGES</div>
+          <div class="skill-items">
+            <div class="skill-item"><span class="skill-bullet"></span>Python</div>
+            <div class="skill-item"><span class="skill-bullet"></span>Java</div>
+            <div class="skill-item"><span class="skill-bullet"></span>JavaScript</div>
+            <div class="skill-item"><span class="skill-bullet"></span>R</div>
+            <div class="skill-item"><span class="skill-bullet"></span>SQL</div>
+            <div class="skill-item"><span class="skill-bullet"></span>HTML/CSS</div>
+          </div>
+        </div>
+        <div class="skill-card" data-hoverable>
+          <div class="skill-title">ML &amp; DATA SCIENCE</div>
+          <div class="skill-items">
+            <div class="skill-item"><span class="skill-bullet"></span>PyTorch</div>
+            <div class="skill-item"><span class="skill-bullet"></span>TensorFlow</div>
+            <div class="skill-item"><span class="skill-bullet"></span>OpenCV</div>
+            <div class="skill-item"><span class="skill-bullet"></span>Pandas</div>
+            <div class="skill-item"><span class="skill-bullet"></span>NumPy</div>
+          </div>
+        </div>
+        <div class="skill-card" data-hoverable>
+          <div class="skill-title">CLOUD &amp; DEVOPS</div>
+          <div class="skill-items">
+            <div class="skill-item"><span class="skill-bullet"></span>AWS (S3, Lambda, EC2, ECR, VPC)</div>
+            <div class="skill-item"><span class="skill-bullet"></span>Docker</div>
+            <div class="skill-item"><span class="skill-bullet"></span>Git</div>
+          </div>
+        </div>
+        <div class="skill-card" data-hoverable>
+          <div class="skill-title">DATA &amp; WEB</div>
+          <div class="skill-items">
+            <div class="skill-item"><span class="skill-bullet"></span>Postgres</div>
+            <div class="skill-item"><span class="skill-bullet"></span>React</div>
+            <div class="skill-item"><span class="skill-bullet"></span>Firebase</div>
+            <div class="skill-item"><span class="skill-bullet"></span>VS Code</div>
+          </div>
+        </div>
+        <div class="skill-card" data-hoverable>
+          <div class="skill-title">AI TOOLING</div>
+          <div class="skill-items">
+            <div class="skill-item"><span class="skill-bullet"></span>Claude Code</div>
+            <div class="skill-item"><span class="skill-bullet"></span>GitHub Copilot</div>
+            <div class="skill-item"><span class="skill-bullet"></span>Cursor</div>
+            <div class="skill-item"><span class="skill-bullet"></span>MCP</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="section projects-section" data-section="projects">
+    <div class="reveal">
+      <div class="sec-head">
+        <span class="sec-num">04</span>
+        <span class="sec-rule"></span>
+      </div>
+      <h2 class="sec-title">Projects &amp; Research</h2>
+      <div class="projects-body">
+        <div class="card-stack" id="cardStack" data-hoverable tabindex="0" role="button" aria-label="Cycle projects">
+          <div class="stack-card" data-idx="0">
+            <span class="card-corner"></span>
+            <div class="card-num">01</div>
+            <div class="card-title">PickleIQ</div>
+          </div>
+          <div class="stack-card" data-idx="1">
+            <span class="card-corner"></span>
+            <div class="card-num">02</div>
+            <div class="card-title">MORFEA</div>
+          </div>
+          <div class="stack-card" data-idx="2">
+            <span class="card-corner"></span>
+            <div class="card-num">03</div>
+            <div class="card-title">YouTube Music Strategy</div>
+          </div>
+        </div>
+        <div class="project-detail">
+          <div class="detail-role" id="detailRole">LEAD SOFTWARE &amp; CLOUD ENGINEER</div>
+          <h3 class="detail-title" id="detailTitle">PickleIQ</h3>
+          <p class="detail-summary" id="detailSummary">AI pickleball coaching app extracting biomechanical metrics and generating player-specific recommendations via the Claude API, built with a commercial facility partner.</p>
+          <div class="tag-row detail-tags" id="detailTags">
+            <span class="tag-chip small">Docker</span>
+            <span class="tag-chip small">AWS Lambda/ECR/EC2</span>
+            <span class="tag-chip small">Claude API</span>
+            <span class="tag-chip small">TrackNetV2</span>
+          </div>
+          <div class="detail-period-row">
+            <span class="detail-period" id="detailPeriod">APR 2026 &ndash; PRESENT</span>
+          </div>
+          <div class="stack-dots" id="stackDots">
+            <span class="stack-dot active"></span>
+            <span class="stack-dot"></span>
+            <span class="stack-dot"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience" class="section experience-section" data-section="experience">
+    <div class="reveal">
+      <div class="sec-head">
+        <span class="sec-num">05</span>
+        <span class="sec-rule"></span>
+      </div>
+      <h2 class="sec-title">Experience</h2>
+      <div class="timeline">
+        <div class="timeline-rail"></div>
+        <div class="timeline-entry">
+          <span class="timeline-marker"></span>
+          <div class="timeline-head">
+            <h3 class="timeline-org">PickleIQ</h3>
+            <span class="timeline-period">APR 2026 &ndash; PRESENT</span>
+          </div>
+          <div class="timeline-role">Lead Software &amp; Cloud Engineer</div>
+          <p class="timeline-desc">Leading cloud infrastructure and ML pipeline for an early-stage AI coaching venture.</p>
+        </div>
+        <div class="timeline-entry">
+          <span class="timeline-marker"></span>
+          <div class="timeline-head">
+            <h3 class="timeline-org">Wisconsin Consulting Club</h3>
+            <span class="timeline-period">FEB 2026 &ndash; PRESENT</span>
+          </div>
+          <div class="timeline-role">Analyst</div>
+          <p class="timeline-desc">YouTube Music engagement team &mdash; competitive research, mockups, and journey mapping.</p>
+        </div>
+        <div class="timeline-entry">
+          <span class="timeline-marker"></span>
+          <div class="timeline-head">
+            <h3 class="timeline-org">UW-Madison Comp Bio &amp; ML Lab</h3>
+            <span class="timeline-period">SEP 2025 &ndash; PRESENT</span>
+          </div>
+          <div class="timeline-role">Undergraduate Researcher</div>
+          <p class="timeline-desc">Designing unsupervised deep learning models for embryo development imaging.</p>
+        </div>
+        <div class="timeline-entry">
+          <span class="timeline-marker"></span>
+          <div class="timeline-head">
+            <h3 class="timeline-org">Leadership Initiatives</h3>
+            <span class="timeline-period">JUL 2023 &ndash; MAY 2025</span>
+          </div>
+          <div class="timeline-role">Public Health Staff Intern</div>
+          <p class="timeline-desc">Directed 9 cross-functional teams of up to 63 researchers deploying public health campaigns in Bauchi State, Nigeria.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section contact-section" data-section="contact">
+    <div class="reveal">
+      <div class="sec-head">
+        <span class="sec-num">06</span>
+        <span class="sec-rule"></span>
+      </div>
+      <h2 class="contact-title">Let's Build<br>Something.</h2>
+      <p class="contact-pitch">Open to software engineering, ML, and cloud roles &mdash; and always up for a good technical conversation.</p>
+      <div class="contact-actions">
+        <a href="mailto:aadhi.balaji07@gmail.com" class="btn btn-primary" data-hoverable>EMAIL ME</a>
+        <a href="https://linkedin.com/in/aadhi07" target="_blank" rel="noopener" class="btn btn-outline" data-hoverable>LINKEDIN</a>
+        <a href="https://github.com/aadhibalaji" target="_blank" rel="noopener" class="btn btn-outline" data-hoverable>GITHUB</a>
+      </div>
+      <p class="contact-email">aadhi.balaji07@gmail.com</p>
+      <div class="contact-footer">
+        <span>SUSSEX, WI</span>
+        <span>&copy; 2026 AADHITYA BALAJI</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div class="glass-shard" id="glassShard" aria-hidden="true">
+  <div class="shard-face"></div>
+  <div class="shard-inner"></div>
+  <div class="shard-label-wrap">
+    <span class="shard-label" id="shardLabel">Intro</span>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
