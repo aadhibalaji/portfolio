@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  @keyframes slashSweep { 0%{transform:translateX(-120%) skewX(-12deg)} 100%{transform:translateX(220%) skewX(-12deg)} }
+  @keyframes blink { 0%,49%{opacity:1} 50%,100%{opacity:0} }
+  @keyframes floatY { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+  * { box-sizing: border-box; }
+  body { margin:0; background:#0b0b0c; color:#f2f0ea; font-family:'Inter',sans-serif; }
+  ::selection { background:#4a7de3; color:#0b0b0c; }
+  a { color:#f2f0ea; }
+  a:hover { color:#4a7de3; }
+</style>
+</helmet>
+
+<div style="position:relative;width:100%;background:#0b0b0c;overflow-x:hidden">
+
+  <div style="position:fixed;left:0;top:0;width:100%;height:3px;background:rgba(242,240,234,0.08);z-index:60">
+    <div style="height:100%;background:#4a7de3;transition:width 0.15s linear;width:{{ scrollPct }}%"></div>
+  </div>
+
+  <div ref="{{ cursorRef }}" style="position:fixed;left:0;top:0;width:18px;height:18px;border-radius:50%;border:2px solid #4a7de3;pointer-events:none;z-index:999;transform:translate(-50%,-50%);transition:width 0.18s ease,height 0.18s ease,border-color 0.18s ease;mix-blend-mode:difference"></div>
+  <div ref="{{ cursorDotRef }}" style="position:fixed;left:0;top:0;width:4px;height:4px;border-radius:50%;background:#f2f0ea;pointer-events:none;z-index:999;transform:translate(-50%,-50%)"></div>
+
+  <nav style="position:fixed;left:28px;top:50%;transform:translateY(-50%);z-index:50;display:flex;flex-direction:column;gap:14px" data-cursor-ignore="1">
+    <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="6">
+      <a href="{{ item.href }}" onClick="{{ item.onClick }}" data-hoverable="1" title="{{ item.label }}" style="position:relative;display:block;width:{{ item.dotWidth }}px;height:4px;background:{{ item.bg }};clip-path:polygon(0 0,100% 0,80% 100%,0% 100%);transition:background 0.25s ease,width 0.25s ease"></a>
+    </sc-for>
+  </nav>
+
+  <div style="position:fixed;right:28px;bottom:28px;z-index:50;font:700 11px/1 'Inter',sans-serif;letter-spacing:0.1em;color:rgba(242,240,234,0.35);writing-mode:vertical-rl;display:flex;align-items:center;gap:10px">
+    <span style="width:2px;height:36px;background:rgba(242,240,234,0.2)"></span>
+    SCROLL
+  </div>
+
+  <nav style="position:fixed;top:28px;right:28px;z-index:50;display:flex;gap:26px" data-cursor-ignore="1">
+    <sc-for list="{{ tabItems }}" as="tab" hint-placeholder-count="6">
+      <a href="{{ tab.href }}" onClick="{{ tab.onClick }}" data-hoverable="1" style="position:relative;text-decoration:none;padding-bottom:8px;font:600 11px/1 'Inter',sans-serif;letter-spacing:0.08em;text-transform:uppercase;color:{{ tab.color }};transition:color 0.25s ease">
+        {{ tab.label }}
+        <span style="position:absolute;left:0;bottom:0;height:2px;width:{{ tab.underline }}%;background:#4a7de3;transition:width 0.25s ease"></span>
+      </a>
+    </sc-for>
+  </nav>
+
+  <section ref="{{ secRefs.hero }}" data-screen-label="Hero" style="position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 clamp(290px,39vw,440px) 0 clamp(140px,9vw,220px);overflow:hidden">
+    <div style="position:relative;z-index:2;opacity:{{ heroOpacity }};transform:translateY({{ heroShift }}px);transition:opacity 0.9s ease,transform 0.9s ease">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px">
+        <span style="width:44px;height:2px;background:#4a7de3"></span>
+        <span style="font:700 12px/1 'Inter',sans-serif;letter-spacing:0.28em;color:#4a7de3">PORTFOLIO // 2026</span>
+      </div>
+      <h1 style="font:300 clamp(48px,8vw,116px)/0.98 'Inter',sans-serif;text-transform:none;margin:0;letter-spacing:-0.02em">
+        Aadhitya<br>Balaji
+      </h1>
+      <div style="display:flex;align-items:center;gap:16px;margin-top:26px;flex-wrap:wrap">
+        <span style="font:600 18px/1.3 'Inter',sans-serif;color:rgba(242,240,234,0.8)">Software &amp; ML Engineer</span>
+        <span style="width:6px;height:6px;background:#4a7de3;transform:rotate(45deg)"></span>
+        <span style="font:500 16px/1.3 'Inter',sans-serif;color:rgba(242,240,234,0.5)">CS + Data Science @ UW&#8209;Madison</span>
+      </div>
+      <p style="max-width:520px;margin:26px 0 0;font:400 15px/1.7 'Inter',sans-serif;color:rgba(242,240,234,0.55)">
+        Building ML-driven products and researching computational biology &mdash; from cloud pipelines to embryo-development models.
+      </p>
+      <div style="display:flex;gap:14px;margin-top:38px">
+        <a href="#projects" onClick="{{ scrollToProjects }}" data-hoverable="1" style="position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:10px;padding:15px 26px;background:#4a7de3;color:#0b0b0c;text-decoration:none;font:700 12px/1 'Inter',sans-serif;letter-spacing:0.1em;clip-path:polygon(0 0,100% 0,100% 70%,94% 100%,0 100%)" style-hover="background:#f2f0ea">
+          VIEW PROJECTS <span>&rarr;</span>
+        </a>
+        <a href="#contact" onClick="{{ scrollToContact }}" data-hoverable="1" style="display:inline-flex;align-items:center;padding:15px 26px;border:1px solid rgba(242,240,234,0.25);color:#f2f0ea;text-decoration:none;font:700 12px/1 'Inter',sans-serif;letter-spacing:0.1em" style-hover="border-color:#4a7de3;color:#4a7de3">
+          GET IN TOUCH
+        </a>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;opacity:0.5;margin-top:56px">
+        <div style="width:1px;height:24px;background:rgba(242,240,234,0.3);animation:floatY 2.4s ease-in-out infinite"></div>
+        <span style="font:600 10px/1 'Inter',sans-serif;letter-spacing:0.2em;color:rgba(242,240,234,0.5)">01 &mdash; INTRO</span>
+      </div>
+    </div>
+  </section>
+
+  <section ref="{{ secRefs.about }}" data-screen-label="About" id="about" style="position:relative;padding:140px clamp(290px,39vw,440px) 140px clamp(140px,9vw,220px);background:#111113">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:56px;align-items:start;opacity:{{ aboutOpacity }};transform:translateY({{ aboutShift }}px);transition:opacity 0.8s ease,transform 0.8s ease">
+      <div>
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px">
+          <span style="font:200 40px/1 'Inter',sans-serif;color:#4a7de3">02</span>
+          <span style="width:30px;height:2px;background:rgba(242,240,234,0.25)"></span>
+        </div>
+        <h2 style="font:300 clamp(28px,3.4vw,40px)/1.15 'Inter',sans-serif;text-transform:none;margin:0 0 22px;letter-spacing:-0.01em">About</h2>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <sc-for list="{{ statChips }}" as="s" hint-placeholder-count="3">
+            <div style="display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid rgba(242,240,234,0.1)">
+              <span style="font:600 12px/1 'Inter',sans-serif;letter-spacing:0.06em;color:rgba(242,240,234,0.5)">{{ s.label }}</span>
+              <span style="font:700 14px/1 'Inter',sans-serif;color:#f2f0ea">{{ s.value }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div>
+        <p style="font:400 20px/1.65 'Inter',sans-serif;color:rgba(242,240,234,0.82);margin:0 0 20px;max-width:640px">
+          I'm a double major in Computer Science &amp; Data Science (minor in Business) at UW&#8211;Madison, expecting to graduate in 2029. I like turning messy, real-world problems &mdash; a pickleball rally, an embryo time-lapse &mdash; into working, deployed systems.
+        </p>
+        <p style="font:400 16px/1.75 'Inter',sans-serif;color:rgba(242,240,234,0.55);margin:0 0 30px;max-width:600px">
+          On one side, I lead engineering for an early-stage AI coaching venture, building the cloud pipeline that gets a video into a coaching insight. On the other, I research unsupervised models for medical imaging in a computational biology lab. Both come down to the same instinct: find the signal, ship the system.
+        </p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <sc-for list="{{ aboutTags }}" as="t" hint-placeholder-count="4">
+            <span style="padding:7px 14px;border:1px solid rgba(74,125,227,0.4);color:#4a7de3;font:600 11px/1 'Inter',sans-serif;letter-spacing:0.05em">{{ t }}</span>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section ref="{{ secRefs.skills }}" data-screen-label="Skills" id="skills" style="position:relative;padding:140px clamp(290px,39vw,440px) 140px clamp(140px,9vw,220px);background:#0b0b0c">
+    <div style="opacity:{{ skillsOpacity }};transform:translateY({{ skillsShift }}px);transition:opacity 0.8s ease,transform 0.8s ease">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px">
+        <span style="font:200 40px/1 'Inter',sans-serif;color:#4a7de3">03</span>
+        <span style="width:30px;height:2px;background:rgba(242,240,234,0.25)"></span>
+      </div>
+      <h2 style="font:300 clamp(28px,3.4vw,40px)/1.15 'Inter',sans-serif;text-transform:none;margin:0 0 56px;letter-spacing:-0.01em">Skills</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2px">
+        <sc-for list="{{ skillGroups }}" as="grp" hint-placeholder-count="5">
+          <div style="background:#0b0b0c;padding:28px 26px" data-hoverable="1">
+            <div style="font:700 11px/1 'Inter',sans-serif;letter-spacing:0.14em;color:#4a7de3;margin-bottom:16px">{{ grp.title }}</div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <sc-for list="{{ grp.items }}" as="it" hint-placeholder-count="4">
+                <div style="display:flex;align-items:center;gap:10px">
+                  <span style="width:5px;height:5px;background:rgba(242,240,234,0.3);flex:none"></span>
+                  <span style="font:500 14px/1.3 'Inter',sans-serif;color:rgba(242,240,234,0.75)">{{ it }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section ref="{{ secRefs.projects }}" data-screen-label="Projects" id="projects" style="position:relative;padding:140px clamp(290px,39vw,440px) 140px clamp(140px,9vw,220px);background:#111113">
+    <div style="opacity:{{ projectsOpacity }};transform:translateY({{ projectsShift }}px);transition:opacity 0.8s ease,transform 0.8s ease">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px">
+        <span style="font:200 40px/1 'Inter',sans-serif;color:#4a7de3">04</span>
+        <span style="width:30px;height:2px;background:rgba(242,240,234,0.25)"></span>
+      </div>
+      <h2 style="font:300 clamp(28px,3.4vw,40px)/1.15 'Inter',sans-serif;text-transform:none;margin:0 0 56px;letter-spacing:-0.01em">Projects &amp; Research</h2>
+      <div style="display:flex;flex-direction:column;gap:36px">
+        <div style="position:relative;height:200px;max-width:380px" data-hoverable="1" onClick="{{ advanceStack }}">
+          <sc-for list="{{ stackCards }}" as="c" hint-placeholder-count="3">
+            <div style="position:absolute;inset:0;background:#141416;box-shadow:0 16px 34px rgba(0,0,0,0.45);cursor:pointer;transform:{{ c.transform }};z-index:{{ c.z }};opacity:{{ c.opacity }};transition:transform 0.45s cubic-bezier(.2,.8,.2,1),opacity 0.4s ease;padding:24px">
+              <span style="position:absolute;top:0;right:0;width:0;height:0;border-style:solid;border-width:0 28px 28px 0;border-color:transparent #4a7de3 transparent transparent"></span>
+              <div style="font:700 44px/0.85 'Inter',sans-serif;color:#4a7de3;margin-bottom:12px">{{ c.num }}</div>
+              <div style="font:700 18px/1.2 'Inter',sans-serif;color:#f2f0ea">{{ c.title }}</div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="min-height:200px">
+          <div style="font:700 15px/1 'Inter',sans-serif;letter-spacing:0.05em;color:#4a7de3;margin-bottom:14px;opacity:{{ frontDetail.opacity }};transition:opacity 0.25s ease">{{ frontDetail.role }}</div>
+          <h3 style="margin:0 0 14px;font:700 32px/1.15 'Inter',sans-serif;color:#f2f0ea;opacity:{{ frontDetail.opacity }};transition:opacity 0.25s ease">{{ frontDetail.title }}</h3>
+          <p style="margin:0 0 18px;font:400 15px/1.65 'Inter',sans-serif;color:rgba(242,240,234,0.55);max-width:520px;opacity:{{ frontDetail.opacity }};transition:opacity 0.25s ease">{{ frontDetail.summary }}</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;opacity:{{ frontDetail.opacity }};transition:opacity 0.25s ease">
+            <sc-for list="{{ frontDetail.tags }}" as="tg" hint-placeholder-count="3">
+              <span style="padding:5px 10px;background:rgba(242,240,234,0.06);font:600 10px/1 'Inter',sans-serif;letter-spacing:0.04em;color:rgba(242,240,234,0.6)">{{ tg }}</span>
+            </sc-for>
+          </div>
+          <div style="display:flex;gap:24px;opacity:{{ frontDetail.opacity }};transition:opacity 0.25s ease">
+            <span style="font:600 11px/1.4 'Inter',sans-serif;color:rgba(242,240,234,0.4)">{{ frontDetail.period }}</span>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:34px">
+            <sc-for list="{{ dots }}" as="d" hint-placeholder-count="3">
+              <span style="width:22px;height:3px;background:{{ d.color }}"></span>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section ref="{{ secRefs.experience }}" data-screen-label="Experience" id="experience" style="position:relative;padding:140px clamp(290px,39vw,440px) 140px clamp(140px,9vw,220px);background:#0b0b0c">
+    <div style="opacity:{{ experienceOpacity }};transform:translateY({{ experienceShift }}px);transition:opacity 0.8s ease,transform 0.8s ease">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px">
+        <span style="font:200 40px/1 'Inter',sans-serif;color:#4a7de3">05</span>
+        <span style="width:30px;height:2px;background:rgba(242,240,234,0.25)"></span>
+      </div>
+      <h2 style="font:300 clamp(28px,3.4vw,40px)/1.15 'Inter',sans-serif;text-transform:none;margin:0 0 56px;letter-spacing:-0.01em">Experience</h2>
+      <div style="position:relative;padding-left:30px">
+        <div style="position:absolute;left:5px;top:6px;bottom:6px;width:1px;background:rgba(242,240,234,0.15)"></div>
+        <sc-for list="{{ timeline }}" as="ex" hint-placeholder-count="4">
+          <div style="position:relative;padding-bottom:44px">
+            <span style="position:absolute;left:-30px;top:4px;width:11px;height:11px;background:#0b0b0c;border:2px solid #4a7de3;transform:rotate(45deg)"></span>
+            <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:4px">
+              <h3 style="margin:0;font:700 17px/1.3 'Inter',sans-serif;color:#f2f0ea">{{ ex.org }}</h3>
+              <span style="font:600 11px/1 'Inter',sans-serif;color:rgba(242,240,234,0.4);letter-spacing:0.04em">{{ ex.period }}</span>
+            </div>
+            <div style="font:600 13px/1.3 'Inter',sans-serif;color:#4a7de3;margin-bottom:8px">{{ ex.role }}</div>
+            <p style="margin:0;font:400 14px/1.6 'Inter',sans-serif;color:rgba(242,240,234,0.55);max-width:680px">{{ ex.desc }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section ref="{{ secRefs.contact }}" data-screen-label="Contact" id="contact" style="position:relative;padding:160px clamp(290px,39vw,440px) 120px max(340px,18vw);background:#111113;overflow:hidden">
+    <div style="position:relative;z-index:2;opacity:{{ contactOpacity }};transform:translateY({{ contactShift }}px);transition:opacity 0.8s ease,transform 0.8s ease">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px">
+        <span style="font:200 40px/1 'Inter',sans-serif;color:#4a7de3">06</span>
+        <span style="width:30px;height:2px;background:rgba(242,240,234,0.25)"></span>
+      </div>
+      <h2 style="font:300 clamp(36px,5.5vw,64px)/1.08 'Inter',sans-serif;text-transform:none;margin:0 0 34px;max-width:900px;letter-spacing:-0.01em">Let's Build<br>Something.</h2>
+      <p style="font:400 17px/1.6 'Inter',sans-serif;color:rgba(242,240,234,0.6);max-width:520px;margin:0 0 44px">Open to software engineering, ML, and cloud roles &mdash; and always up for a good technical conversation.</p>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:64px">
+        <a href="mailto:aadhi.balaji07@gmail.com" data-hoverable="1" style="display:inline-flex;align-items:center;gap:10px;padding:16px 28px;background:#4a7de3;color:#0b0b0c;text-decoration:none;font:700 12px/1 'Inter',sans-serif;letter-spacing:0.1em;clip-path:polygon(0 0,100% 0,100% 70%,94% 100%,0 100%)">EMAIL ME</a>
+        <a href="https://linkedin.com/in/aadhi07" target="_blank" data-hoverable="1" style="display:inline-flex;align-items:center;padding:16px 28px;border:1px solid rgba(242,240,234,0.25);text-decoration:none;font:700 12px/1 'Inter',sans-serif;letter-spacing:0.1em;color:#f2f0ea" style-hover="border-color:#4a7de3;color:#4a7de3">LINKEDIN</a>
+        <a href="https://github.com/aadhibalaji" target="_blank" data-hoverable="1" style="display:inline-flex;align-items:center;padding:16px 28px;border:1px solid rgba(242,240,234,0.25);text-decoration:none;font:700 12px/1 'Inter',sans-serif;letter-spacing:0.1em;color:#f2f0ea" style-hover="border-color:#4a7de3;color:#4a7de3">GITHUB</a>
+      </div>
+      <p style="font:400 15px/1.5 'Inter',sans-serif;color:rgba(242,240,234,0.5);margin:0 0 44px;user-select:all;cursor:text">aadhi.balaji07@gmail.com</p>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding-top:24px;border-top:1px solid rgba(242,240,234,0.1);flex-wrap:wrap;gap:12px">
+        <span style="font:600 11px/1 'Inter',sans-serif;letter-spacing:0.08em;color:rgba(242,240,234,0.35)">SUSSEX, WI</span>
+        <span style="font:600 11px/1 'Inter',sans-serif;letter-spacing:0.08em;color:rgba(242,240,234,0.35)">&copy; 2026 AADHITYA BALAJI</span>
+      </div>
+    </div>
+  </section>
+
+  <div style="position:fixed;right:-6vw;top:50%;width:40vw;max-width:620px;height:56vh;max-height:520px;z-index:900;pointer-events:none;transform:translateY(-50%) rotate({{ shard.rotate }}deg);transition:transform 0.3s ease-out,filter 0.3s ease-out;filter:hue-rotate({{ shard.hue }}deg)">
+    <div style="position:absolute;inset:0;clip-path:polygon(24% 0%,78% 6%,100% 38%,86% 78%,52% 100%,18% 86%,0% 46%);background:linear-gradient(155deg,rgba(74,125,227,0.22),rgba(74,125,227,0.04) 55%,rgba(242,240,234,0.08));border:1.5px solid rgba(74,125,227,0.32)"></div>
+    <div style="position:absolute;inset:8%;clip-path:polygon(24% 0%,78% 6%,100% 38%,86% 78%,52% 100%,18% 86%,0% 46%);border:1px solid rgba(242,240,234,0.1)"></div>
+    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
+      <span style="font:600 clamp(24px,4.5vw,52px)/1 'Inter',sans-serif;letter-spacing:-0.01em;text-transform:uppercase;color:rgba(242,240,234,0.2);white-space:nowrap;transform:skewX(-8deg)">{{ activeLabel }}</span>
+    </div>
+  </div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    scrollPct: 0,
+    visible: {},
+    active: 'hero',
+    projectOrder: [0, 1, 2],
+  };
+
+  advanceStack = () => {
+    if (this.state.shufflingIdx != null) return;
+    const frontIdx = this.state.projectOrder[0];
+    this.setState({ shufflingIdx: frontIdx });
+    setTimeout(() => {
+      this.setState((s) => ({
+        projectOrder: [...s.projectOrder.slice(1), s.projectOrder[0]],
+        shufflingIdx: null,
+      }));
+    }, 320);
+  };
+
+  secKeys = ['hero', 'about', 'skills', 'projects', 'experience', 'contact'];
+  secRefs = {
+    hero: React.createRef(), about: React.createRef(), skills: React.createRef(),
+    projects: React.createRef(), experience: React.createRef(), contact: React.createRef(),
+  };
+
+  data = {
+    statChips: [
+      { label: 'EDUCATION', value: 'UW\u2013Madison \u201929' },
+      { label: 'MAJORS', value: 'CS + Data Science' },
+      { label: 'GPA', value: '3.92 / 4.0' },
+    ],
+    aboutTags: ['ML SYSTEMS', 'CLOUD', 'COMPUTER VISION', 'RESEARCH'],
+    skillGroups: [
+      { title: 'LANGUAGES', items: ['Python', 'Java', 'JavaScript', 'R', 'SQL', 'HTML/CSS'] },
+      { title: 'ML & DATA SCIENCE', items: ['PyTorch', 'TensorFlow', 'OpenCV', 'Pandas', 'NumPy'] },
+      { title: 'CLOUD & DEVOPS', items: ['AWS (S3, Lambda, EC2, ECR, VPC)', 'Docker', 'Git'] },
+      { title: 'DATA & WEB', items: ['Postgres', 'React', 'Firebase', 'VS Code'] },
+      { title: 'AI TOOLING', items: ['Claude Code', 'GitHub Copilot', 'Cursor', 'MCP'] },
+    ],
+    projects: [
+      {
+        num: '01', title: 'PickleIQ', role: 'LEAD SOFTWARE & CLOUD ENGINEER', period: 'APR 2026 \u2013 PRESENT',
+        summary: 'AI pickleball coaching app extracting biomechanical metrics and generating player-specific recommendations via the Claude API, built with a commercial facility partner.',
+        tags: ['Docker', 'AWS Lambda/ECR/EC2', 'Claude API', 'TrackNetV2'],
+        metric: '3x faster processing',
+      },
+      {
+        num: '02', title: 'MORFEA', role: 'UNDERGRADUATE RESEARCHER', period: 'SEP 2025 \u2013 PRESENT',
+        summary: 'Unsupervised CNN-LSTM autoencoder modeling embryo development as latent trajectories for label-free quality classification, trained on 700+ time-lapse sequences.',
+        tags: ['PyTorch', 'CNN-LSTM', 'Computational Biology'],
+        metric: 'Manuscript in review',
+      },
+      {
+        num: '03', title: 'YouTube Music Strategy', role: 'ANALYST, WISCONSIN CONSULTING CLUB', period: 'FEB 2026 \u2013 PRESENT',
+        summary: 'Competitor deep-dive across 5 platforms with usage metrics and conversion funnels, translated into feature mockups and a user journey map.',
+        tags: ['Product Strategy', 'Data Analysis', 'UX Research'],
+        metric: '2 of 4 final deliverables',
+      },
+    ],
+    timeline: [
+      { org: 'PickleIQ', role: 'Lead Software & Cloud Engineer', period: 'APR 2026 \u2013 PRESENT', desc: 'Leading cloud infrastructure and ML pipeline for an early-stage AI coaching venture.' },
+      { org: 'Wisconsin Consulting Club', role: 'Analyst', period: 'FEB 2026 \u2013 PRESENT', desc: 'YouTube Music engagement team \u2014 competitive research, mockups, and journey mapping.' },
+      { org: 'UW-Madison Comp Bio & ML Lab', role: 'Undergraduate Researcher', period: 'SEP 2025 \u2013 PRESENT', desc: 'Designing unsupervised deep learning models for embryo development imaging.' },
+      { org: 'Leadership Initiatives', role: 'Public Health Staff Intern', period: 'JUL 2023 \u2013 MAY 2025', desc: 'Directed 9 cross-functional teams of up to 63 researchers deploying public health campaigns in Bauchi State, Nigeria.' },
+    ],
+  };
+
+  componentDidMount() {
+    this.onScroll = () => {
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = h > 0 ? Math.min(100, Math.max(0, (window.scrollY / h) * 100)) : 0;
+      const line = window.innerHeight * 0.4;
+      let active = this.state.active;
+      for (const k of this.secKeys) {
+        const el = this.secRefs[k].current;
+        if (!el) continue;
+        const r = el.getBoundingClientRect();
+        if (r.top <= line && r.bottom > line) { active = k; break; }
+      }
+      this.setState((s) => (active === s.active ? { scrollPct: pct } : { scrollPct: pct, active, visible: { ...s.visible, [active]: true } }));
+    };
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    this.onScroll();
+
+    this.observer = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          const key = this.secKeys.find((k) => this.secRefs[k].current === e.target);
+          if (key) this.setState((s) => ({ visible: { ...s.visible, [key]: true } }));
+        }
+      });
+    }, { threshold: 0.2 });
+    this.secKeys.forEach((k) => {
+      if (this.secRefs[k].current) this.observer.observe(this.secRefs[k].current);
+    });
+
+    this.cursorEl = null;
+    this.cursorDotEl = null;
+    this.onMouseMove = (e) => {
+      if (this.cursorEl) { this.cursorEl.style.left = e.clientX + 'px'; this.cursorEl.style.top = e.clientY + 'px'; }
+      if (this.cursorDotEl) { this.cursorDotEl.style.left = e.clientX + 'px'; this.cursorDotEl.style.top = e.clientY + 'px'; }
+      const target = e.target.closest ? e.target.closest('[data-hoverable]') : null;
+      if (this.cursorEl) {
+        if (target) { this.cursorEl.style.width = '38px'; this.cursorEl.style.height = '38px'; this.cursorEl.style.borderColor = '#f2f0ea'; }
+        else { this.cursorEl.style.width = '18px'; this.cursorEl.style.height = '18px'; this.cursorEl.style.borderColor = '#4a7de3'; }
+      }
+    };
+    window.addEventListener('mousemove', this.onMouseMove);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.onScroll);
+    window.removeEventListener('mousemove', this.onMouseMove);
+    if (this.observer) this.observer.disconnect();
+  }
+
+  scrollTo(id) {
+    return (e) => {
+      e.preventDefault();
+      const el = document.getElementById(id) || (this.secRefs[id] && this.secRefs[id].current);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    };
+  }
+
+  renderVals() {
+    const v = this.state.visible;
+    const off = (key) => ({ opacity: v[key] ? 1 : 0, shift: v[key] ? 0 : 36 });
+    const hero = off('hero'); hero.opacity = 1; hero.shift = 0;
+    const about = off('about');
+    const skills = off('skills');
+    const projects = off('projects');
+    const experience = off('experience');
+    const contact = off('contact');
+
+    const labels = { hero: 'Intro', about: 'About', skills: 'Skills', projects: 'Projects', experience: 'Experience', contact: 'Contact' };
+    const hrefs = { hero: '#', about: '#about', skills: '#skills', projects: '#projects', experience: '#experience', contact: '#contact' };
+    const navItems = this.secKeys.map((k) => ({
+      href: hrefs[k],
+      label: labels[k],
+      onClick: this.scrollTo(k),
+      bg: this.state.active === k ? '#4a7de3' : 'rgba(242,240,234,0.25)',
+      dotWidth: this.state.active === k ? 34 : 18,
+    }));
+    const tabItems = this.secKeys.map((k) => ({
+      href: hrefs[k],
+      label: labels[k],
+      onClick: this.scrollTo(k),
+      color: this.state.active === k ? '#f2f0ea' : 'rgba(242,240,234,0.4)',
+      underline: this.state.active === k ? 100 : 0,
+    }));
+
+    return {
+      cursorRef: (el) => { this.cursorEl = el; },
+      cursorDotRef: (el) => { this.cursorDotEl = el; },
+      advanceStack: this.advanceStack,
+      dots: this.data.projects.map((_, i) => ({ color: i === this.state.projectOrder[0] ? '#4a7de3' : 'rgba(242,240,234,0.2)' })),
+      activeLabel: labels[this.state.active],
+      shard: { rotate: -8 + (this.state.scrollPct / 100) * 22, hue: this.state.scrollPct * 1.3 },
+
+      frontDetail: (() => {
+        const p = this.data.projects[this.state.projectOrder[0]];
+        return { ...p, opacity: 1 };
+      })(),
+      stackCards: (() => {
+        const transforms = [
+          'translate(0px,0px) rotate(0deg) scale(1)',
+          'translate(18px,-16px) rotate(-4deg) scale(0.96)',
+          'translate(34px,-30px) rotate(-8deg) scale(0.92)',
+        ];
+        const shuffleTransform = 'translate(70px,50px) rotate(18deg) scale(0.85)';
+        const posOf = {};
+        this.state.projectOrder.forEach((projIdx, pos) => { posOf[projIdx] = pos; });
+        return this.data.projects.map((p, i) => {
+          const pos = posOf[i];
+          const shuffling = this.state.shufflingIdx === i;
+          return {
+            num: p.num, title: p.title,
+            transform: shuffling ? shuffleTransform : transforms[pos],
+            z: shuffling ? 12 : 10 - pos,
+            opacity: shuffling ? 0.4 : (pos === 0 ? 1 : pos === 1 ? 0.85 : 0.6),
+          };
+        });
+      })(),
+      scrollPct: Math.round(this.state.scrollPct),
+      secRefs: this.secRefs,
+      navItems,
+      tabItems,
+      scrollToProjects: this.scrollTo('projects'),
+      scrollToContact: this.scrollTo('contact'),
+      heroOpacity: hero.opacity, heroShift: hero.shift,
+      aboutOpacity: about.opacity, aboutShift: about.shift,
+      skillsOpacity: skills.opacity, skillsShift: skills.shift,
+      projectsOpacity: projects.opacity, projectsShift: projects.shift,
+      experienceOpacity: experience.opacity, experienceShift: experience.shift,
+      contactOpacity: contact.opacity, contactShift: contact.shift,
+      statChips: this.data.statChips,
+      aboutTags: this.data.aboutTags,
+      skillGroups: this.data.skillGroups,
+      projects: this.data.projects,
+      timeline: this.data.timeline,
+    };
+  }
+}
+
+</script>
+</body>
+</html>
