@@ -306,6 +306,9 @@ h1, h2, h3, p { margin: 0; }
   transform: translateZ(34px);
   backface-visibility: hidden;
 }
+.shard-label-wrap-back {
+  transform: translateZ(-34px) rotateY(180deg);
+}
 .shard-label {
   font: 600 clamp(24px, 4.5vw, 52px)/1 'Inter', sans-serif;
   letter-spacing: -0.01em; text-transform: uppercase; color: rgba(242,240,234,0.22);

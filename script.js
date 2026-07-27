@@ -9,6 +9,7 @@
   const glassShard = document.getElementById('glassShard');
   const shardSpin = document.getElementById('shardSpin');
   const shardLabel = document.getElementById('shardLabel');
+  const shardLabelBack = document.getElementById('shardLabelBack');
 
   let activeKey = 'hero';
 
@@ -18,6 +19,7 @@
     sideDots.forEach((el) => el.classList.toggle('active', el.dataset.section === key));
     tabItems.forEach((el) => el.classList.toggle('active', el.dataset.section === key));
     shardLabel.textContent = SECTION_LABELS[key];
+    shardLabelBack.textContent = SECTION_LABELS[key];
   }
 
   function onScroll() {
