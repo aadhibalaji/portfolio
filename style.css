@@ -268,13 +268,13 @@ h1, h2, h3, p { margin: 0; }
   height: 56vh; max-height: 520px; z-index: 900; pointer-events: none;
   transform: translateY(-50%);
   perspective: 1400px;
-  transition: filter 0.3s ease-out;
+  will-change: filter;
 }
 .shard-3d {
   position: absolute; inset: 0;
   transform-style: preserve-3d;
   transform: rotateX(14deg) rotateY(-18deg) rotateZ(-8deg);
-  transition: transform 0.4s cubic-bezier(.2,.7,.2,1);
+  will-change: transform;
 }
 .shard-face, .shard-face-back, .shard-slice {
   position: absolute; inset: 0;
@@ -316,6 +316,16 @@ h1, h2, h3, p { margin: 0; }
 }
 
 @media (max-width: 900px) {
-  .glass-shard, .scroll-tag { display: none; }
+  .glass-shard, .scroll-tag, .side-nav { display: none; }
   .section, .contact-section { padding-left: 24px; padding-right: 24px; }
+
+  .tab-nav {
+    left: 0; right: 0; top: 0; padding: 18px 20px;
+    gap: 20px; justify-content: flex-start;
+    overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+    background: rgba(11,11,12,0.88);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  }
+  .tab-nav::-webkit-scrollbar { display: none; }
+  .tab-item { flex: none; }
 }

@@ -22,25 +22,46 @@
     shardLabelBack.textContent = SECTION_LABELS[key];
   }
 
+  // Cache each section's absolute (document-relative) top/bottom once, instead of calling
+  // getBoundingClientRect() on every scroll frame -- that forced a synchronous layout recalc
+  // every frame (a style write earlier in onScroll, then a layout read, is the classic
+  // thrashing pattern). Recomputed only on load/resize, never during scrolling.
+  let sectionBounds = [];
+  function measureSections() {
+    sectionBounds = SECTION_KEYS.map((key) => {
+      const el = sections[key];
+      const top = el.offsetTop;
+      return { key, top, bottom: top + el.offsetHeight };
+    });
+  }
+  measureSections();
+  window.addEventListener('resize', measureSections);
+
   function onScroll() {
+    const scrollY = window.scrollY;
     const h = document.documentElement.scrollHeight - window.innerHeight;
-    const pct = h > 0 ? Math.min(100, Math.max(0, (window.scrollY / h) * 100)) : 0;
-    progressFill.style.width = pct + '%';
-    const rotY = -18 + (pct / 100) * 380; // multiple full turns down the page
+    const pct = h > 0 ? Math.min(100, Math.max(0, (scrollY / h) * 100)) : 0;
+    const rotY = (pct / 100) * 720; // two full turns: starts dead-on at page load and lands dead-on again at the bottom (Contact), everything in between can land at an angle
     const rotX = 14 + Math.sin(pct / 100 * Math.PI * 2) * 10;
-    const rotZ = -8 + (pct / 100) * 34;
+    const rotZ = -8 + 20 * Math.sin(2 * Math.PI * pct / 100); // returns to the same -8deg tilt at pct=100 as at pct=0, so Contact reads flat like Intro
+
+    const line = scrollY + window.innerHeight * 0.4;
+    let matchedKey = null;
+    for (const { key, top, bottom } of sectionBounds) {
+      if (top <= line && bottom > line) { matchedKey = key; break; }
+    }
+
+    progressFill.style.width = pct + '%';
     shardSpin.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg) rotateZ(${rotZ}deg)`;
     glassShard.style.filter = `hue-rotate(${pct * 1.3}deg)`;
-
-    const line = window.innerHeight * 0.4;
-    for (const key of SECTION_KEYS) {
-      const el = sections[key];
-      if (!el) continue;
-      const r = el.getBoundingClientRect();
-      if (r.top <= line && r.bottom > line) { setActive(key); break; }
-    }
+    if (matchedKey) setActive(matchedKey);
   }
-  window.addEventListener('scroll', onScroll, { passive: true });
+  let scrollTicking = false;
+  window.addEventListener('scroll', () => {
+    if (scrollTicking) return;
+    scrollTicking = true;
+    requestAnimationFrame(() => { onScroll(); scrollTicking = false; });
+  }, { passive: true });
   onScroll();
 
   // reveal-in on first intersection
