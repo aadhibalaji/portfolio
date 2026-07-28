@@ -113,15 +113,19 @@
     { role: 'UNDERGRADUATE RESEARCHER', title: 'MORFEA', period: 'SEP 2025 – PRESENT',
       summary: 'Unsupervised CNN-LSTM autoencoder modeling embryo development as latent trajectories for label-free quality classification, trained on 700+ time-lapse sequences.',
       tags: ['PyTorch', 'CNN-LSTM', 'Computational Biology'] },
-    { role: 'ANALYST, WISCONSIN CONSULTING CLUB', title: 'YouTube Music Strategy', period: 'FEB 2026 – PRESENT',
-      summary: 'Competitor deep-dive across 5 platforms with usage metrics and conversion funnels, translated into feature mockups and a user journey map.',
-      tags: ['Product Strategy', 'Data Analysis', 'UX Research'] },
+    { role: 'DEVELOPER', title: 'Verdict', period: 'MAY 2026 – PRESENT',
+      summary: 'Open-source multi-agent debate tool where AI agents argue for and against any decision, idea, or piece of writing, giving sharper, less sycophantic feedback than a single LLM session.',
+      tags: ['Anthropic API', 'TypeScript', 'Multi-Agent Systems'] },
+    { role: 'DEVELOPER', title: 'Gesturist', period: 'JUL 2026 – PRESENT',
+      summary: 'A macOS app in progress that lets people control their Mac with custom hand gestures they train themselves, rather than a fixed set of built-in ones, so it can work for hands that don’t move in the "standard" pinch or fist way existing tools assume.',
+      tags: ['Computer Vision', 'Swift'] },
   ];
 
   const TRANSFORMS = [
     'translate(0px,0px) rotate(0deg) scale(1)',
     'translate(18px,-16px) rotate(-4deg) scale(0.96)',
     'translate(34px,-30px) rotate(-8deg) scale(0.92)',
+    'translate(48px,-42px) rotate(-12deg) scale(0.88)',
   ];
   const SHUFFLE_TRANSFORM = 'translate(70px,50px) rotate(18deg) scale(0.85)';
 
@@ -134,7 +138,7 @@
   const detailTags = document.getElementById('detailTags');
   const detailPeriod = document.getElementById('detailPeriod');
 
-  let order = [0, 1, 2]; // project index at each stack position, front-to-back
+  let order = [0, 1, 2, 3]; // project index at each stack position, front-to-back
   let shufflingIdx = null;
 
   function renderStack() {
@@ -146,7 +150,7 @@
       const shuffling = shufflingIdx === i;
       card.style.transform = shuffling ? SHUFFLE_TRANSFORM : TRANSFORMS[pos];
       card.style.zIndex = shuffling ? 12 : 10 - pos;
-      card.style.opacity = shuffling ? 0.4 : (pos === 0 ? 1 : pos === 1 ? 0.85 : 0.6);
+      card.style.opacity = shuffling ? 0.4 : (pos === 0 ? 1 : pos === 1 ? 0.85 : pos === 2 ? 0.6 : 0);
     });
     dots.forEach((dot, i) => dot.classList.toggle('active', i === order[0]));
   }
