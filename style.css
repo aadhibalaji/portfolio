@@ -271,6 +271,12 @@ h1, h2, h3, p { margin: 0; }
   perspective: 1400px;
   will-change: filter;
 }
+/* static ambient glow behind the 3D shard so edge-on rotation frames don't read as empty */
+.glass-shard::before {
+  content: ''; position: absolute; inset: 12%;
+  background: radial-gradient(closest-side, rgba(74,125,227,0.3), rgba(74,125,227,0) 70%);
+  filter: blur(46px) hue-rotate(var(--shard-hue, 0deg));
+}
 .shard-3d {
   position: absolute; inset: 0;
   transform-style: preserve-3d;
