@@ -67,7 +67,7 @@ h1, h2, h3, p { margin: 0; }
   transition: background 0.25s ease, width 0.25s ease;
 }
 .side-dot:hover { background: #f2f0ea; }
-.side-dot.active { background: #4a7de3; width: 34px; }
+.side-dot.active { background: #4a7de3; width: 34px; filter: hue-rotate(var(--shard-hue, 0deg)); }
 
 /* ---- scroll tag ---- */
 .scroll-tag {

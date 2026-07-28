@@ -51,9 +51,11 @@
       if (top <= line && bottom > line) { matchedKey = key; break; }
     }
 
+    const hue = pct * 1.3;
     progressFill.style.width = pct + '%';
     shardSpin.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg) rotateZ(${rotZ}deg)`;
-    glassShard.style.filter = `hue-rotate(${pct * 1.3}deg)`;
+    glassShard.style.filter = `hue-rotate(${hue}deg)`;
+    document.documentElement.style.setProperty('--shard-hue', `${hue}deg`);
     if (matchedKey) setActive(matchedKey);
   }
   let scrollTicking = false;
