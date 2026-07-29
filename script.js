@@ -37,6 +37,38 @@
   measureSections();
   window.addEventListener('resize', measureSections);
 
+  // Build the shard's side walls: rectangles bridging each edge of the front
+  // face to the matching edge of the back face, so the shard is an actual
+  // closed 3D prism instead of stacked flat planes (which collapse to a thin
+  // sliver when viewed edge-on). Same vertices as the .shard-face clip-path.
+  const SHARD_POLY = [[24, 0], [78, 6], [100, 38], [86, 78], [52, 100], [18, 86], [0, 46]];
+  const SHARD_DEPTH = 52; // matches shard-face translateZ(26) / shard-face-back translateZ(-26)
+  const shardWalls = Array.from({ length: SHARD_POLY.length }, () => {
+    const wall = document.createElement('div');
+    wall.className = 'shard-wall';
+    shardSpin.appendChild(wall);
+    return wall;
+  });
+  function buildShardWalls() {
+    const w = shardSpin.offsetWidth, h = shardSpin.offsetHeight;
+    if (!w || !h) return;
+    const pts = SHARD_POLY.map(([px, py]) => [(px / 100) * w, (py / 100) * h]);
+    pts.forEach(([x1, y1], i) => {
+      const [x2, y2] = pts[(i + 1) % pts.length];
+      const dx = x2 - x1, dy = y2 - y1;
+      const len = Math.hypot(dx, dy);
+      const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+      const wall = shardWalls[i];
+      wall.style.width = `${len}px`;
+      wall.style.height = `${SHARD_DEPTH}px`;
+      wall.style.left = `${(x1 + x2) / 2 - len / 2}px`;
+      wall.style.top = `${(y1 + y2) / 2 - SHARD_DEPTH / 2}px`;
+      wall.style.transform = `rotateZ(${angle}deg) rotateX(90deg)`;
+    });
+  }
+  buildShardWalls();
+  window.addEventListener('resize', buildShardWalls);
+
   function onScroll() {
     const scrollY = window.scrollY;
     const h = document.documentElement.scrollHeight - window.innerHeight;

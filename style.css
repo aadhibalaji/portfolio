@@ -283,7 +283,7 @@ h1, h2, h3, p { margin: 0; }
   transform: rotateX(14deg) rotateY(-18deg) rotateZ(-8deg);
   will-change: transform;
 }
-.shard-face, .shard-face-back, .shard-slice {
+.shard-face, .shard-face-back {
   position: absolute; inset: 0;
   clip-path: polygon(24% 0%, 78% 6%, 100% 38%, 86% 78%, 52% 100%, 18% 86%, 0% 46%);
 }
@@ -298,9 +298,11 @@ h1, h2, h3, p { margin: 0; }
   border: 1px solid rgba(74,125,227,0.15);
   transform: translateZ(-26px);
 }
-.shard-slice {
-  border: 1px solid rgba(74,125,227,0.18);
-  background: rgba(74,125,227,0.03);
+.shard-wall {
+  position: absolute;
+  background: rgba(74,125,227,0.09);
+  border-top: 1px solid rgba(74,125,227,0.28);
+  border-bottom: 1px solid rgba(74,125,227,0.28);
 }
 .shard-inner {
   position: absolute; inset: 8%;
